@@ -1,0 +1,33 @@
+name: build and deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  CICD:
+    name: Build and Deploy Application to Azure
+    runs-on: self-hosted
+  
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    # - name: Setup Terraform
+    #   uses: hashicorp/setup-terraform@v2.0.3
+    
+    - name: Terraform Init
+      run: terraform init
+      working-directory: ./Terraform
+    
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      working-directory: ./Terraform
+
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:{GITHUB_RUN_NUMBER}
+      working-directory: ./terraform-poc-ui
