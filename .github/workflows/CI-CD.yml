@@ -21,6 +21,9 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+    - name: Azure set subscription
+      run: az account set --subscription ${{ vars.SUBSCRIPTION_ID }}
+
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2.0.3
     
