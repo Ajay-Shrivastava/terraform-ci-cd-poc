@@ -1,0 +1,20 @@
+name: 'Terraform Destroy'
+
+on:
+  workflow_dispatch
+  
+jobs:
+  terraformDestroy:
+    name: 'Delete azure resources'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2.0.3
+
+    - name: Terraform Destroy
+      run: terraform destroy
+      working-directory: ./Terraform
