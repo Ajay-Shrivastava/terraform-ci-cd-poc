@@ -42,7 +42,7 @@ module "ACR_ResourceGroup" {
 
 resource "azurerm_container_registry" "acr" {
   depends_on = [ module.ACR_ResourceGroup ]
-  name                     = "Terraform-POC-ACR"
+  name                     = "acrpocterraform"
   resource_group_name      = module.ACR_ResourceGroup.name
   location                 = module.ACR_ResourceGroup.location
   sku                      = "Basic"
