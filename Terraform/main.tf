@@ -43,8 +43,8 @@ module "ACR_ResourceGroup" {
 resource "azurerm_container_registry" "acr" {
   depends_on = [ module.ACR_ResourceGroup ]
   name                     = "mycontainerregistry"
-  resource_group_name      = module.ACR_ResourceGroup.resource_group_name
-  location                 = module.ACR_ResourceGroup.resource_group_location
+  resource_group_name      = module.ACR_ResourceGroup.name
+  location                 = module.ACR_ResourceGroup.location
   sku                      = "Basic"
   admin_enabled            = true
 }
