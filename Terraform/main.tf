@@ -42,11 +42,11 @@ module "ACR_ResourceGroup" {
 
 resource "azurerm_container_registry" "acr" {
   depends_on = [ module.ACR_ResourceGroup ]
-  name                     = "acrpocterraform"
+  name                     = "mycontainerregistry"
   resource_group_name      = module.ACR_ResourceGroup.name
   location                 = module.ACR_ResourceGroup.location
   sku                      = "Basic"
-  admin_enabled            = true
+  admin_enabled            = false
 }
 
 module "ContainerApp" {
@@ -55,10 +55,17 @@ module "ContainerApp" {
     container_app_environment_name = "mycontainerappenv"
     environment = "dev"
     container_app_name = "mycontainerapp"
-    resource_group_name = module.ContainerApp_ResourceGroup.name
-    location = module.ContainerApp_ResourceGroup.location
+    resource_group_name = "myResourceGroup"
+    location = "East US"
     revision_mode = "Single"
-    DOCKER_REGISTRY_SERVER_URL = "https://${azurerm_container_registry.acr.login_server}"
-    DOCKER_REGISTRY_SERVER_USERNAME = azurerm_container_registry.acr.admin_username
-    DOCKER_REGISTRY_SERVER_PASSWORD = azurerm_container_registry.acr.admin_password
+    # DOCKER_REGISTRY_SERVER_URL = "https://${azurerm_container_registry.acr.login_server}"
+    # DOCKER_REGISTRY_SERVER_USERNAME = azurerm_container_registry.acr.admin_username
+    # DOCKER_REGISTRY_SERVER_PASSWORD = azurerm_container_registry.acr.admin_password
+}
+
+module "AcrPull_RoleAssignment" {
+    depends_on = [ module.ContainerApp ]
+    source = "git::https://github.com/Ajay-Shrivastava/terraform-modules.git//ACR_RoleAssignment?ref=main"
+    principal_id = module.ContainerApp.principal_id
+    acr_id = azurerm_container_registry.acr.id
 }
