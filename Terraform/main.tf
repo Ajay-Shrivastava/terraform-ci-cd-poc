@@ -28,14 +28,14 @@ provider "azurerm" {
 data "azurerm_client_config" "current" {}
 
 module "ContainerApp_ResourceGroup" {
-    source = "https://github.com/Ajay-Shrivastava_wkl/terraform-modules.git/Azure_Resource_Group"
+    source = "https://github.com/Ajay-Shrivastava/terraform-modules.git/Azure_Resource_Group"
     resource_group_name = "TerraformPoc-App"
     resource_group_location = "East US"
 }
 
 module "ACR_ResourceGroup" {
     depends_on = [ module.ContainerApp_ResourceGroup ]
-    source = "https://github.com/Ajay-Shrivastava_wkl/terraform-modules.git/Azure_Resource_Group"
+    source = "https://github.com/Ajay-Shrivastava/terraform-modules.git/Azure_Resource_Group"
     resource_group_name = "TerraformPoc-ACR"
     resource_group_location = "East US"
 }
@@ -51,7 +51,7 @@ resource "azurerm_container_registry" "acr" {
 
 module "ContainerApp" {
     depends_on = [ azurerm_container_registry.acr ]
-    source = "https://github.com/Ajay-Shrivastava_wkl/terraform-modules.git/CONTAINER_APP"
+    source = "https://github.com/Ajay-Shrivastava/terraform-modules.git/CONTAINER_APP"
     container_app_environment_name = "mycontainerappenv"
     environment = "dev"
     container_app_name = "mycontainerapp"
