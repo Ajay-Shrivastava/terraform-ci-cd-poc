@@ -20,7 +20,7 @@ env:
   CONTAINER_IMAGE: "pocui-app"
   CONTAINER_REGISTRY_NAME: "acrpocterraform"
   CONTAINER_APP: "mycontainerapp"
-  CONTAINERAPP_RESOURCEGROUP: "TerraformPoc-App"
+  CONTAINERAPP_RESOURCEGROUP: "'TerraformPoc-App'"
   
 jobs:
   CICD:
