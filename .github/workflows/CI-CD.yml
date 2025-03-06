@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ vars.ARM_CLIENT_SECRET }}
+  ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+  ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
+
 jobs:
   CICD:
     name: Build and Deploy Application to Azure
