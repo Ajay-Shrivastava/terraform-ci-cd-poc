@@ -9,7 +9,7 @@ on:
 jobs:
   CICD:
     name: Build and Deploy Application to Azure
-    runs-on: winows
+    runs-on: windows
   
     steps:
 
