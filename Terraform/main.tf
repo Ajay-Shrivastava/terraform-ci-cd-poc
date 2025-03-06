@@ -42,7 +42,7 @@ module "ACR_ResourceGroup" {
 
 resource "azurerm_container_registry" "acr" {
   depends_on = [ module.ACR_ResourceGroup ]
-  name                     = "mycontainerregistry"
+  name                     = "acrpocterraform"
   resource_group_name      = module.ACR_ResourceGroup.name
   location                 = module.ACR_ResourceGroup.location
   sku                      = "Basic"
@@ -55,7 +55,7 @@ module "ContainerApp" {
     container_app_environment_name = "mycontainerappenv"
     environment = "dev"
     container_app_name = "mycontainerapp"
-    resource_group_name = "myResourceGroup"
+    resource_group_name = "TerraformPoc-App"
     location = "East US"
     revision_mode = "Single"
     ContainerRegistry_loginServer = azurerm_container_registry.acr.login_server
