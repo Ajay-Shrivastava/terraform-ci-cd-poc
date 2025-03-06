@@ -67,6 +67,6 @@ jobs:
     - name: Update Container App with new image
       run: |
         az containerapp update --name ${{ env.CONTAINER_APP }} `
-          --resource-group ${{ env.CONTAINERAPP_RESOURCEGROUP }} `
-          --image ${{ env.CONTAINER_REGISTRY_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE }}:${{ env.IMAGE_TAG }} `
-          --output table
+            --resource-group ${{ env.CONTAINERAPP_RESOURCEGROUP }} `
+            --image ${{ env.CONTAINER_REGISTRY_NAME }}.azurecr.io/${{ env.CONTAINER_IMAGE }}:${{ env.IMAGE_TAG }} `
+            --output table
