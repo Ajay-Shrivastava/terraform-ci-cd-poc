@@ -3,8 +3,12 @@ name: build and deploy
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - '.github/workflows/**'
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - '.github/workflows/**'
 
 env:
   ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
