@@ -9,7 +9,7 @@ on:
 jobs:
   CICD:
     name: Build and Deploy Application to Azure
-    runs-on: windows
+    runs-on: ubuntu-latest
   
     steps:
 
