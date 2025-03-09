@@ -50,7 +50,8 @@ resource "azurerm_container_registry" "acr" {
 }
 
 module "ContainerApp" {
-    depends_on = [ azurerm_container_registry.acr ]
+    # depends_on = [ azurerm_container_registry.acr ]
+    depends_on = [ module.AcrPull_RoleAssignment ]
     source = "git::https://github.com/Ajay-Shrivastava/terraform-modules.git//Container_App?ref=main"
     container_app_environment_name = "mycontainerappenv"
     environment = "dev"
@@ -65,7 +66,8 @@ module "ContainerApp" {
 }
 
 module "AcrPull_RoleAssignment" {
-    depends_on = [ module.ContainerApp ]
+    # depends_on = [ module.ContainerApp ]
+    depends_on = [ azurerm_container_registry.acr ]
     source = "git::https://github.com/Ajay-Shrivastava/terraform-modules.git//ACR_RoleAssignment?ref=main"
     principal_id = module.ContainerApp.principal_id
     acr_id = azurerm_container_registry.acr.id
