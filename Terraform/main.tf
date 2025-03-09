@@ -52,8 +52,8 @@ resource "azurerm_container_registry" "acr" {
 resource "azurerm_user_assigned_identity" "container_identity" {
   depends_on = [ azurerm_container_registry.acr ]
   name                = "container-app-identity"
-  resource_group_name = TerraformPoc-App
-  location            = East US
+  resource_group_name = "TerraformPoc-App"
+  location            = "East US"
 }
 
 resource "azurerm_role_assignment" "acr_pull" {
