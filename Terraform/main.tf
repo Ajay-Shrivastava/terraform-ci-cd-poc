@@ -49,9 +49,22 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled            = false
 }
 
+resource "azurerm_user_assigned_identity" "container_identity" {
+  depends_on = [ azurerm_container_registry.acr ]
+  name                = "container-app-identity"
+  resource_group_name = TerraformPoc-App
+  location            = East US
+}
+
+resource "azurerm_role_assignment" "acr_pull" {
+  depends_on = [ azurerm_user_assigned_identity.container_identity ]
+  scope                = azurerm_container_registry.acr.id
+  role_definition_name = "AcrPull"
+  principal_id         = azurerm_user_assigned_identity.container_identity.principal_id
+}
+
 module "ContainerApp" {
-    # depends_on = [ azurerm_container_registry.acr ]
-    depends_on = [ module.AcrPull_RoleAssignment ]
+    depends_on = [ azurerm_container_registry.acr ]
     source = "git::https://github.com/Ajay-Shrivastava/terraform-modules.git//Container_App?ref=main"
     container_app_environment_name = "mycontainerappenv"
     environment = "dev"
@@ -60,15 +73,15 @@ module "ContainerApp" {
     location = "East US"
     revision_mode = "Single"
     ContainerRegistry_loginServer = azurerm_container_registry.acr.login_server
+    identityId = azurerm_user_assigned_identity.container_identity.id
     # DOCKER_REGISTRY_SERVER_URL = "https://${azurerm_container_registry.acr.login_server}"
     # DOCKER_REGISTRY_SERVER_USERNAME = azurerm_container_registry.acr.admin_username
     # DOCKER_REGISTRY_SERVER_PASSWORD = azurerm_container_registry.acr.admin_password
 }
 
-module "AcrPull_RoleAssignment" {
-    # depends_on = [ module.ContainerApp ]
-    depends_on = [ azurerm_container_registry.acr ]
-    source = "git::https://github.com/Ajay-Shrivastava/terraform-modules.git//ACR_RoleAssignment?ref=main"
-    principal_id = module.ContainerApp.principal_id
-    acr_id = azurerm_container_registry.acr.id
-}
+#module "AcrPull_RoleAssignment" {
+#    depends_on = [ module.ContainerApp ]
+#    source = "git::https://github.com/Ajay-Shrivastava/terraform-modules.git//ACR_RoleAssignment?ref=main"
+#    principal_id = module.ContainerApp.principal_id
+#    acr_id = azurerm_container_registry.acr.id
+#}
