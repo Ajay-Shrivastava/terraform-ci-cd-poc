@@ -64,7 +64,7 @@ resource "azurerm_role_assignment" "acr_pull" {
 }
 
 module "ContainerApp" {
-    depends_on = [ azurerm_container_registry.acr ]
+    depends_on = [ azurerm_role_assignment.acr_pull ]
     source = "git::https://github.com/Ajay-Shrivastava/terraform-modules.git//Container_App?ref=main"
     container_app_environment_name = "mycontainerappenv"
     environment = "dev"
