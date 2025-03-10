@@ -32,13 +32,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    #- name: Azure Login
-    #  uses: Azure/login@v2.2.0
-    #  with:
-    #    creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Azure Login
+      uses: Azure/login@v2.2.0
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    #- name: Azure set subscription
-    #  run: az account set --subscription ${{ vars.ARM_SUBSCRIPTION_ID }}
+    - name: Azure set subscription
+      run: az account set --subscription ${{ vars.ARM_SUBSCRIPTION_ID }}
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2.0.3
