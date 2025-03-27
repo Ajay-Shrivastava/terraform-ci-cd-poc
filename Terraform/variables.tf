@@ -13,3 +13,23 @@
 #         key                  = "backend.tfstate"
 #     }
 # }
+
+variable "client_id" {
+  description = "The ID of the Azure Client"
+  type        = string
+}
+
+variable "client_secret" {
+  description = "client_secret of Azure Client"
+  type        = string
+}
+
+variable "tenant_id" {
+  description = "tenant_id of the Azure Client"
+  type        = string
+}
+
+variable "subscription_id" {
+  description = "subscription_id of the Azure subscription"
+  type        = string
+}
