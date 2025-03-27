@@ -13,7 +13,7 @@ on:
 
 env:
   ARM_CLIENT_ID: ${{ vars.ARM_CLIENT_ID }}
-  ARM_CLIENT_SECRET: ${{ vars.ARM_CLIENT_SECRET }}
+  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
   ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
   IMAGE_TAG: ${{ github.run_number }}
@@ -21,6 +21,10 @@ env:
   CONTAINER_REGISTRY_NAME: "acrpocterraform"
   CONTAINER_APP: "mycontainerapp"
   CONTAINERAPP_RESOURCEGROUP: "TerraformPoc-App"
+  TF_VAR_client_id:  ${{ vars.ARM_CLIENT_ID }}
+  TF_VAR_client_secret: ${{ secrets.ARM_CLIENT_SECRET }}
+  TF_VAR_tenant_id: ${{ vars.ARM_TENANT_ID }}
+  TF_VAR_subscription_id: ${{ vars.ARM_SUBSCRIPTION_ID }} 
   
 jobs:
   CICD:
